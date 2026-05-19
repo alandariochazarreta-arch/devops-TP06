@@ -1,9 +1,13 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import psycopg2, os, datetime
+import psycopg2
+import os
+import datetime
+
 
 app = Flask(__name__)
 CORS(app)
+
 
 def get_conn():
     return psycopg2.connect(
@@ -13,6 +17,7 @@ def get_conn():
         user=os.getenv("DB_USER", "postgres"),
         password=os.getenv("DB_PASSWORD", "postgres")
     )
+
 
 def init_db():
     conn = get_conn()
@@ -29,6 +34,7 @@ def init_db():
     cur.close()
     conn.close()
 
+
 @app.route("/health")
 def health():
     try:
@@ -43,6 +49,7 @@ def health():
         "time": datetime.datetime.utcnow().isoformat()
     })
 
+
 @app.route("/api/notes", methods=["GET"])
 def get_notes():
     conn = get_conn()
@@ -56,9 +63,14 @@ def get_notes():
         for r in rows
     ])
 
+
 @app.route("/api/notes", methods=["POST"])
 def create_note():
     data = request.get_json()
+
+    if not data or "title" not in data:
+        return jsonify({"error": "El campo 'title' es obligatorio"}), 400
+
     conn = get_conn()
     cur = conn.cursor()
     cur.execute(
@@ -71,6 +83,7 @@ def create_note():
     conn.close()
     return jsonify({"id": note_id, "message": "nota creada"}), 201
 
+
 @app.route("/api/notes/<int:note_id>", methods=["DELETE"])
 def delete_note(note_id):
     conn = get_conn()
@@ -80,6 +93,7 @@ def delete_note(note_id):
     cur.close()
     conn.close()
     return jsonify({"message": "nota eliminada"})
+
 
 if __name__ == "__main__":
     init_db()
