@@ -13,13 +13,14 @@ App de notas con pipeline CI/CD completo usando GitHub Actions.
 | build-push | main y develop | docker buildx, push a Docker Hub |
 | deploy | solo main | SSH al servidor, compose pull + up |
 
-## 4 Secrets requeridos
+## 5 Secrets requeridos
 
 * `DOCKERHUB_USERNAME`
 * `DOCKERHUB_TOKEN`
 * `DEPLOY_HOST`
 * `DEPLOY_USER`
 * `DEPLOY_SSH_KEY`
+* `TAILSCALE_AUTHKEY`
 
 ## Correr tests localmente
 
