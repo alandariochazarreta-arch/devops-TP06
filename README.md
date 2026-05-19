@@ -1,6 +1,6 @@
 # DevOps Portfolio — TP0 7: CI/CD
 
-![CI/CD Pipeline](https://github.com/TU_USUARIO/devops-TP06/actions/workflows/cicd.yml/badge.svg)
+![CI/CD Pipeline](https://github.com/alandariochazarreta-arch/devops-TP06/actions/workflows/cicd.yml/badge.svg)
 
 App de notas con pipeline CI/CD completo usando GitHub Actions.
 
